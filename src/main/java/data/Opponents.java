@@ -8,7 +8,7 @@ import java.util.List;
  * @author nilstes
  */
 public class Opponents implements Serializable {
-    List<String> userNames = new ArrayList<String>();
+    List<String> userNames = new ArrayList<>();
 
     public Opponents() {
     }

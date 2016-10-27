@@ -5,6 +5,7 @@ import data.Session;
 import repo.SessionRepository;
 
 import javax.ws.rs.NotAuthorizedException;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -34,6 +35,12 @@ public class SessionController {
     }
     
     public Opponents getPossibleOpponents(String myUserName) {
-        throw null; // todo
+        Collection<String> names = repo.getAllUserNames();
+        Opponents ops = new Opponents();
+        for (String name : names) {
+            if (!name.equals(myUserName))
+                ops.addUserName(name);
+        }
+        return ops;
     }
 }

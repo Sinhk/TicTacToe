@@ -1,5 +1,6 @@
 package controller;
 
+import data.Opponents;
 import data.Session;
 import org.junit.Before;
 import org.junit.Rule;
@@ -8,6 +9,7 @@ import org.junit.rules.ExpectedException;
 import repo.SessionRepository;
 
 import javax.ws.rs.NotAuthorizedException;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -45,5 +47,20 @@ public class SessionControllerTest {
         exception.expect(NotAuthorizedException.class);
         Session session = sc.createSession(un);
         assertNull(session);
+    }
+
+    @Test
+    public void testListingOtherPlayersToInvite() {
+        String un = "Bob Kare";
+        sc.createSession(un);
+        sc.createSession("Torgunn");
+        sc.createSession("Tore Lars");
+        Opponents opponents = sc.getPossibleOpponents(un);
+        Collection<String> names = repo.getAllUserNames();
+        for (String s : opponents.getUserNames()) {
+            assertTrue(names.contains(s));
+            assertNotEquals(un, s);
+        }
+
     }
 }
