@@ -4,6 +4,9 @@ import data.Opponents;
 import data.Session;
 import repo.SessionRepository;
 
+import javax.ws.rs.NotAuthorizedException;
+import java.util.Date;
+
 /**
  * @author nilstes
  */
@@ -16,7 +19,14 @@ public class SessionController {
     }
     
     public Session createSession(String userName) {
-        return null; // todo
+        if (repo.existsSession(userName)) {
+            throw new NotAuthorizedException("Duplicate login");
+        }
+        Session session = new Session();
+        session.setUserName(userName);
+        session.setLoggedOn(new Date());
+        repo.addSession(session);
+        return session;
     }
 
     public void removeSession(String userName) {

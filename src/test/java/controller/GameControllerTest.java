@@ -1,11 +1,13 @@
 package controller;
 
 import data.Game;
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.NotFoundException;
-import static junit.framework.TestCase.assertNotNull;
 import org.junit.Test;
 import repo.GameRepository;
+
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.NotFoundException;
+
+import static junit.framework.TestCase.assertNotNull;
 
 /**
  * @author nilstes
@@ -35,5 +37,10 @@ public class GameControllerTest {
         Game game = c.createGame("inviter", "invitee", 10);
         assertNotNull(game);
         c.move(game.getGameId(), game.getTurn(), 12, 21);
+    }
+
+    @Test
+    public void testThatPlayerCannotMoveToOccupiedField() {
+
     }
 }
